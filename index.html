@@ -90,7 +90,7 @@
             <button class="menu-button" id="maths">Mathématiques</button>
             <button class="menu-button" id="francais">Français</button>
             <button class="menu-button" id="sciences">Sciences</button>
-            <button class="menu-button" id="test">Test</button>
+            <button class="menu-button" id="cfg">CFG</button>
         </div>
 
         <div id="game" style="display: none;">
@@ -105,88 +105,91 @@
         const questionsAll = [
             { question: "Quelle est la capitale de la France ?", options: ["Paris", "Lyon", "Marseille", "Bordeaux"], answer: 0 },
             { question: "Combien font 5 + 7 ?", options: ["10", "11", "12", "13"], answer: 2 },
-            { question: "Qui a écrit 'Les Misérables' ?", options: ["Victor Hugo", "Jules Verne", "Molière", "Émile Zola"], answer: 0 },
-            { question: "En quelle année a eu lieu la Révolution française ?", options: ["1789", "1792", "1776", "1804"], answer: 0 },
-            { question: "Quelle est la formule chimique de l'eau ?", options: ["H2O", "CO2", "O2", "H2"], answer: 0 },
-            { question: "Quelle est la capitale du Canada ?", options: ["Ottawa", "Toronto", "Vancouver", "Montreal"], answer: 0 },
-            { question: "Quel est le résultat de 9 x 9 ?", options: ["81", "72", "90", "99"], answer: 0 },
-            { question: "Qui est l'auteur de 'Candide' ?", options: ["Voltaire", "Rousseau", "Diderot", "Hugo"], answer: 0 },
-            { question: "Qu'est-ce que la photosynthèse ?", options: ["Production d'énergie par la lumière", "Absorption de l'eau", "Respiration des plantes", "Formation de graines"], answer: 0 },
-            { question: "Quand l'homme a-t-il marché sur la Lune ?", options: ["1969", "1972", "1965", "1958"], answer: 0 }
+            { question: "Qui a écrit 'Les Misérables' ?", options: ["Victor Hugo", "Jules Verne", "Molière", "Émile Zola"], answer: 0 }
         ];
 
         const subjects = {
             histoire: [{ question: "En quelle année a eu lieu la Révolution française ?", options: ["1789", "1792", "1776", "1804"], answer: 0 }],
             geographie: [{ question: "Quelle est la capitale du Canada ?", options: ["Ottawa", "Toronto", "Vancouver", "Montreal"], answer: 0 }],
             maths: [{ question: "Combien font 5 + 7 ?", options: ["10", "11", "12", "13"], answer: 2 }],
-            francais: [{
-                    question: "Qu'est-ce que des paronymes ?",
-                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 2 },
-                {
-                    question: "Qu'est-ce que des antonymes ?",
-                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 3 },
-                 
- 		{
-                    question: "Qu'est-ce que des synonymes ?",
-                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 1 },
-                   
- 		{
-                    question: "Conjugue 'crier' à l'imparfait à la 1ère P.P.",
+            francais: [
+                { question: "Qu'est-ce que des paronymes ?", options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 2 },
+                { question: "Qu'est-ce que des antonymes ?", options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 3 },
+                { question: "Qu'est-ce que des synonymes ?", options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 1 },
+		{  question: "Conjugue 'crier' à l'imparfait à la 1ère P.P.",
                     options: ["criez", "criions", "crions", "criiez"], answer: 1 },
-                   
- 		{
-                    question: "Conjugue 'manger' au présent à la 2e P.S.",
-                    options: ["mange", "manget", "manges", "manged"], answer: 1 },
                   
- 		{
-                    question: "Conjugue 'manger' à l'imparfait à la 2e P.S.",
+ 		{ question: "Conjugue 'manger' au présent à la 2e P.S.",
+                    options: ["mange", "manget", "manges", "manged"], answer: 2 },
+                    
+ 		{ question: "Conjugue 'manger' à l'imparfait à la 2e P.S.",
                     options: ["mangais", "mangait", "mangeais", "mangeait"], answer: 2 },
+                    
+                  
+ 		{ question: "Corrige l'orthographe : 'C'est toi la plus joli, ma chérie.",
+                   options: ["C'est = Sais", "plus = plu", "joli = jolie", "chérie = chéri"], answer: 2 },
+                                       
+ 		{ question: "Où est placé un suffixe ?",
+                    options: ["avant un mot", "après un mot", "dans le mot"], answer: 1 },
+                    
+                 { question: "Corrige la phrase : 'Il et fou de répéter ça !'",
+                    options: ["et = est", "fou = fous", "répéter = répété", "ça = sa"], 
+                    answer: 0 },
                    
- 		{
-                    question: "Corrige l'orthographe : 'C'est toi la plus joli, ma chérie.",
-                    options: ["C'est = Sais", "plus = plu", "joli = jolie", "chérie = chéri"], answer: 2 },
+ 		{ question: "'Kimmy lui avait demandé' quelle est la nature de 'lui' ?",
+                    options: ["Pronom", "Déterminant", "Adverbe", "Préposition"], answer: 0 },
+   ],
+            sciences: [
+                { question: "Que désigne 'la biodiversité' ?", options: ["Les plantes", "Les animaux", "L'ensemble des êtres vivants"], answer: 2 },
+                { question: "Qu'est-ce qu'une éruption effusive ?", options: ["Une éruption qui explose", "Une éruption avec de la lave qui coule", "Une éruption avec une nuée ardente", "Une éruption dans la mer"], answer: 1 },
+{
+                    question: "Quel est l'aspect de l'asténosphère ?",
+                    options: ["Rigide", "Liquide", "Parfois liquide parfois solide"], answer: 0 },
                     
  		{
-                    question: "Où est placé un suffixe ?",
-                    options: ["avant un mot", "après un mot", "dans le mot"], answer: 1 },
-                   
+                    question: "Qu'est-ce qui ne protège pas contre les tsunamis ?",
+                    options: ["La mangrove", "Les coraux", "Les brise vagues", "Les ports"], answer: 3 },
+                  
  		{
-                    question: "Corrige la phrase : 'Il et fou de répéter ça !'",
-                    options: ["et = est", "fou = fous", "répéter = répété", "ça = sa"], answer: 0 },
-                   
- 		{
-                    question: "'Kimmy lui avait demandé' quelle est la nature de 'lui' ?",
-                    options: ["Pronom", "Déterminant", "Adverbe", "Préposition"], answer: 0 },
-                   
-],
-            sciences: [{ question: "Quelle est la formule chimique de l'eau ?", options: ["H2O", "CO2", "O2", "H2"], answer: 0 }]
+                    question: "Parmi ces énergies, laquelle n'est pas une énergie renouvelable ?",
+                    options: ["Le pétrole", "Le soleil", "L'eau", "Le vent"], answer: 0 },
+                    
+	 	{
+                    question: "Quel gaz est majoritairement responsable du réchauffement climatique ?",
+                    options: ["Le dioxyde de carbone", "L'azote", "Le dioxygène", "La méthane"], answer: 0 },
+            ],
+            cfg: [{ question: "Quel document est nécessaire pour voter en France ?", options: ["Carte d'électeur", "Carte d'identité", "Permis de conduire", "Passeport"], answer: 0 }]
         };
 
         let currentQuestionIndex = 0;
         let currentQuestions = [];
         let score = 0;
 
-        function shuffleArray(array) {
-            return array.sort(() => Math.random() - 0.5);
-        }
-
         function startQuiz(subject) {
+            if (subject === "all") {
+                const allQuestions = Object.values(subjects).flat();
+                currentQuestions = getRandomQuestions(allQuestions, 10);
+            } else {
+                currentQuestions = getRandomQuestions(subjects[subject], 10);
+            }
+
             currentQuestionIndex = 0;
             score = 0;
-            currentQuestions = subject === "test"
-                ? shuffleArray(questionsAll).slice(0, 20)
-                : shuffleArray(subjects[subject]);
-            showQuestion();
-            document.getElementById("game").style.display = "block";
+
             document.getElementById("menu").style.display = "none";
+            document.getElementById("game").style.display = "block";
+
+            showQuestion();
         }
 
         function showQuestion() {
-            const currentQuestion = currentQuestions[currentQuestionIndex];
-            document.getElementById("question").textContent = currentQuestion.question;
+            const questionObj = currentQuestions[currentQuestionIndex];
+            document.getElementById("question").textContent = questionObj.question;
+
             const options = document.getElementById("options");
             options.innerHTML = "";
-            currentQuestion.options.forEach((option, index) => {
+
+            questionObj.options.forEach((option, index) => {
                 const button = document.createElement("button");
                 button.textContent = option;
                 button.onclick = () => checkAnswer(index, button);
@@ -195,15 +198,14 @@
         }
 
         function checkAnswer(selectedIndex, button) {
-            const currentQuestion = currentQuestions[currentQuestionIndex];
-            const correctButton = document.querySelectorAll("#options button")[currentQuestion.answer];
+            const correctIndex = currentQuestions[currentQuestionIndex].answer;
 
-            if (selectedIndex === currentQuestion.answer) {
+            if (selectedIndex === correctIndex) {
                 button.classList.add("correct");
                 score++;
             } else {
                 button.classList.add("incorrect");
-                correctButton.classList.add("correct");
+                document.querySelectorAll("#options button")[correctIndex].classList.add("correct");
             }
 
             setTimeout(() => {
@@ -214,23 +216,26 @@
                     alert("Quiz terminé ! Votre score est : " + score);
                     resetGame();
                 }
-            }, 3000);
+            }, 2000);
+        }
+
+        function getRandomQuestions(allQuestions, number) {
+            const shuffled = allQuestions.sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, number);
         }
 
         function resetGame() {
-            currentQuestionIndex = 0;
-            score = 0;
             document.getElementById("game").style.display = "none";
             document.getElementById("menu").style.display = "block";
         }
 
-        document.getElementById("all").onclick = () => startQuiz("test");
+        document.getElementById("all").onclick = () => startQuiz("all");
         document.getElementById("histoire").onclick = () => startQuiz("histoire");
         document.getElementById("geographie").onclick = () => startQuiz("geographie");
         document.getElementById("maths").onclick = () => startQuiz("maths");
         document.getElementById("francais").onclick = () => startQuiz("francais");
         document.getElementById("sciences").onclick = () => startQuiz("sciences");
-        document.getElementById("test").onclick = () => startQuiz("test");
+        document.getElementById("cfg").onclick = () => startQuiz("cfg");
 
         document.getElementById("back-to-menu").onclick = resetGame;
     </script>
