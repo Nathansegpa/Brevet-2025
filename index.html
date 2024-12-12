@@ -35,8 +35,6 @@
             font-size: 16px;
             cursor: pointer;
             transition: opacity 0.3s;
-            background-size: cover;
-            background-position: center;
             height: 100px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
@@ -67,292 +65,175 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: opacity 0.3s;
         }
         #options button:hover {
-            background-color: #2980b9;
+            opacity: 0.8;
         }
-        #result {
-            font-weight: bold;
-            margin: 20px 0;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
+        .correct {
+            background-color: #2ecc71 !important;
         }
-        #nextButton {
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        #nextButton:hover {
-            background-color: #27ae60;
-        }
-        #leaderboard {
-            margin-top: 20px;
-            background-color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        #leaderboard h3 {
-            color: #2c3e50;
-            margin-top: 0;
-        }
-        #leaderboard ol {
-            padding-left: 20px;
+        .incorrect {
+            background-color: #e74c3c !important;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Super Révision Brevet</h1>
+
         <div id="menu">
-            <button id="all" class="menu-button" onclick="startGame('all')">Toutes les matières</button>
-            <button id="histoire" class="menu-button" onclick="startGame('Histoire')">Histoire</button>
-            <button id="geographie" class="menu-button" onclick="startGame('Géographie')">Géographie</button>
-            <button id="maths" class="menu-button" onclick="startGame('Mathématiques')">Mathématiques</button>
-            <button id="francais" class="menu-button" onclick="startGame('Français')">Français</button>
-            <button id="sciences" class="menu-button" onclick="startGame('Sciences')">Sciences</button>
+            <button class="menu-button" id="all">Toutes les matières</button>
+            <button class="menu-button" id="histoire">Histoire</button>
+            <button class="menu-button" id="geographie">Géographie</button>
+            <button class="menu-button" id="maths">Mathématiques</button>
+            <button class="menu-button" id="francais">Français</button>
+            <button class="menu-button" id="sciences">Sciences</button>
+            <button class="menu-button" id="test">Test</button>
         </div>
-        <div id="quiz" style="display:none;">
+
+        <div id="game" style="display: none;">
             <div id="question"></div>
             <div id="options"></div>
-            <div id="result"></div>
-            <button id="nextButton" style="display:none;">Question suivante</button>
+            <button id="back-to-menu">Retour au menu</button>
         </div>
-        <div id="score"></div>
-        <div id="leaderboard"></div>
+
     </div>
 
     <script>
-        const questions = {
-            "Histoire": [
-                {
-                    question: "En quelle année a commencé la Première Guerre mondiale ?",
-                    options: ["1914", "1918", "1939", "1945"],
-                    reponse: "1914"
-                },
-                {
-                    question: "Qui était le leader de la Résistance française pendant la Seconde Guerre mondiale ?",
-                    options: ["Charles de Gaulle", "Philippe Pétain", "Jean Moulin", "François Mitterrand"],
-                    reponse: "Charles de Gaulle"
-                }
-            ],
-            "Géographie": [
-                {
-                    question: "Quel est le plus long fleuve de France ?",
-                    options: ["La Loire", "La Seine", "Le Rhône", "La Garonne"],
-                    reponse: "La Loire"
-                },
-                {
-                    question: "Quelle est la capitale de l'Union Européenne ?",
-                    options: ["Bruxelles", "Strasbourg", "Paris", "Berlin"],
-                    reponse: "Bruxelles"
-                }
-            ],
-            "Mathématiques": [
-                {
-                    question: "Quelle est la formule de l'aire d'un cercle ?",
-                    options: ["πr²", "2πr", "πd", "r²"],
-                    reponse: "πr²"
-                },
-                {
-                    question: "Combien vaut la racine carrée de 144 ?",
-                    options: ["12", "14", "10", "16"],
-                    reponse: "12"
-                }
-            ],
-            "Français": [
-                {
+        const questionsAll = [
+            { question: "Quelle est la capitale de la France ?", options: ["Paris", "Lyon", "Marseille", "Bordeaux"], answer: 0 },
+            { question: "Combien font 5 + 7 ?", options: ["10", "11", "12", "13"], answer: 2 },
+            { question: "Qui a écrit 'Les Misérables' ?", options: ["Victor Hugo", "Jules Verne", "Molière", "Émile Zola"], answer: 0 },
+            { question: "En quelle année a eu lieu la Révolution française ?", options: ["1789", "1792", "1776", "1804"], answer: 0 },
+            { question: "Quelle est la formule chimique de l'eau ?", options: ["H2O", "CO2", "O2", "H2"], answer: 0 },
+            { question: "Quelle est la capitale du Canada ?", options: ["Ottawa", "Toronto", "Vancouver", "Montreal"], answer: 0 },
+            { question: "Quel est le résultat de 9 x 9 ?", options: ["81", "72", "90", "99"], answer: 0 },
+            { question: "Qui est l'auteur de 'Candide' ?", options: ["Voltaire", "Rousseau", "Diderot", "Hugo"], answer: 0 },
+            { question: "Qu'est-ce que la photosynthèse ?", options: ["Production d'énergie par la lumière", "Absorption de l'eau", "Respiration des plantes", "Formation de graines"], answer: 0 },
+            { question: "Quand l'homme a-t-il marché sur la Lune ?", options: ["1969", "1972", "1965", "1958"], answer: 0 }
+        ];
+
+        const subjects = {
+            histoire: [{ question: "En quelle année a eu lieu la Révolution française ?", options: ["1789", "1792", "1776", "1804"], answer: 0 }],
+            geographie: [{ question: "Quelle est la capitale du Canada ?", options: ["Ottawa", "Toronto", "Vancouver", "Montreal"], answer: 0 }],
+            maths: [{ question: "Combien font 5 + 7 ?", options: ["10", "11", "12", "13"], answer: 2 }],
+            francais: [{
                     question: "Qu'est-ce que des paronymes ?",
-                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"],
-                    reponse: "2 mots qui s'écrivent presque pareil"
-                },
+                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 2 },
                 {
                     question: "Qu'est-ce que des antonymes ?",
-                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"],
-                    reponse: "2 mots contraires"
-                },
+                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 3 },
+                 
  		{
                     question: "Qu'est-ce que des synonymes ?",
-                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"],
-                    reponse: "2 mots de même sens"
-                },
+                    options: ["2 mots qui se prononcent pareil", "2 mots de même sens", "2 mots qui s'écrivent presque pareil", "2 mots contraires"], answer: 1 },
+                   
  		{
                     question: "Conjugue 'crier' à l'imparfait à la 1ère P.P.",
-                    options: ["criez", "criions", "crions", "criiez"],
-                    reponse: "criions"
-                },
+                    options: ["criez", "criions", "crions", "criiez"], answer: 1 },
+                   
  		{
                     question: "Conjugue 'manger' au présent à la 2e P.S.",
-                    options: ["mange", "manget", "manges", "manged"],
-                    reponse: "manges"
-                },
+                    options: ["mange", "manget", "manges", "manged"], answer: 1 },
+                  
  		{
                     question: "Conjugue 'manger' à l'imparfait à la 2e P.S.",
-                    options: ["mangais", "mangait", "mangeais", "mangeait"],
-                    reponse: "mangeais"
-                },
+                    options: ["mangais", "mangait", "mangeais", "mangeait"], answer: 2 },
+                   
  		{
                     question: "Corrige l'orthographe : 'C'est toi la plus joli, ma chérie.",
-                    options: ["C'est = Sais", "plus = plu", "joli = jolie", "chérie = chéri"],
-                    reponse: "joli = jolie"
-                },
+                    options: ["C'est = Sais", "plus = plu", "joli = jolie", "chérie = chéri"], answer: 2 },
+                    
  		{
                     question: "Où est placé un suffixe ?",
-                    options: ["avant un mot", "après un mot", "dans le mot"],
-                    reponse: "après un mot"
-                },
+                    options: ["avant un mot", "après un mot", "dans le mot"], answer: 1 },
+                   
  		{
                     question: "Corrige la phrase : 'Il et fou de répéter ça !'",
-                    options: ["et = est", "fou = fous", "répéter = répété", "ça = sa"],
-                    reponse: "et = est"
-                },
+                    options: ["et = est", "fou = fous", "répéter = répété", "ça = sa"], answer: 0 },
+                   
  		{
                     question: "'Kimmy lui avait demandé' quelle est la nature de 'lui' ?",
-                    options: ["Pronom", "Déterminant", "Adverbe", "Préposition"],
-                    reponse: "Pronom"
-                },
-            ],
-            "Sciences": [
-                {
-                    question: "Que veut désigne 'la biodiversité' ?",
-                    options: ["Les plantes", "Les animaux", "L'ensemble des êtres vivants"],
-                    reponse: "L'ensemble des êtres vivants"
-                },
-                {
-                    question: "Qu'est-ce qu'une éruption effusive ?",
-                    options: ["Une éruption qui explose", "Une éruption avec de la lave qui coule", "Une éruption avec une nuée ardente", "Une éruption dans la mer"],
-                    reponse: "Une éruption avec de la lave qui coule"
-                },
- 		{
-                    question: "Quel est l'aspect de l'asténosphère ?",
-                    options: ["Rigide", "Liquide", "Parfois liquide parfois solide"],
-                    reponse: "Rigide"
-                },
- 		{
-                    question: "Qu'est-ce qui ne protège pas contre les tsunamis ?",
-                    options: ["La mangrove", "Les coraux", "Les brise vagues", "Les ports"],
-                    reponse: "Les ports"
-                },
- 		{
-                    question: "Parmi ces énergies, laquelle n'est pas une énergie renouvelable ?",
-                    options: ["Le pétrole", "Le soleil", "L'eau", "Le vent"],
-                    reponse: "Le soleil"
-                },
-	 	{
-                    question: "Quel gaz est majoritairement responsable du réchauffement climatique ?",
-                    options: ["Le dioxyde de carbone", "L'azote", "Le dioxygène", "La méthane"],
-                    reponse: "L'ensemble des êtres vivants"
-                },
-            ]
+                    options: ["Pronom", "Déterminant", "Adverbe", "Préposition"], answer: 0 },
+                   
+],
+            sciences: [{ question: "Quelle est la formule chimique de l'eau ?", options: ["H2O", "CO2", "O2", "H2"], answer: 0 }]
         };
 
-        let currentQuestion = 0;
-        let score = 0;
+        let currentQuestionIndex = 0;
         let currentQuestions = [];
-        let leaderboard = [];
-        let playerName = "";
+        let score = 0;
 
         function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
+            return array.sort(() => Math.random() - 0.5);
         }
 
-        function startGame(subject) {
-            playerName = prompt("Entrez votre nom :");
-            if (!playerName) return;
-
-            document.getElementById('menu').style.display = 'none';
-            document.getElementById('quiz').style.display = 'block';
-
-            if (subject === 'all') {
-                currentQuestions = Object.values(questions).flat();
-            } else {
-                currentQuestions = questions[subject];
-            }
-            shuffleArray(currentQuestions);
-            currentQuestion = 0;
+        function startQuiz(subject) {
+            currentQuestionIndex = 0;
             score = 0;
+            currentQuestions = subject === "test"
+                ? shuffleArray(questionsAll).slice(0, 20)
+                : shuffleArray(subjects[subject]);
             showQuestion();
+            document.getElementById("game").style.display = "block";
+            document.getElementById("menu").style.display = "none";
         }
 
         function showQuestion() {
-            if (currentQuestion >= currentQuestions.length) {
-                showFinalScore();
-                return;
-            }
-
-            const questionData = currentQuestions[currentQuestion];
-            document.getElementById('question').textContent = questionData.question;
-
-            const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = '';
-            questionData.options.forEach((option, index) => {
-                const button = document.createElement('button');
+            const currentQuestion = currentQuestions[currentQuestionIndex];
+            document.getElementById("question").textContent = currentQuestion.question;
+            const options = document.getElementById("options");
+            options.innerHTML = "";
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement("button");
                 button.textContent = option;
-                button.onclick = () => checkAnswer(option);
-                optionsDiv.appendChild(button);
+                button.onclick = () => checkAnswer(index, button);
+                options.appendChild(button);
             });
-
-            document.getElementById('result').textContent = '';
-            document.getElementById('nextButton').style.display = 'none';
         }
 
-        function checkAnswer(selectedAnswer) {
-            const questionData = currentQuestions[currentQuestion];
-            const resultDiv = document.getElementById('result');
-            const isCorrect = selectedAnswer === questionData.reponse;
+        function checkAnswer(selectedIndex, button) {
+            const currentQuestion = currentQuestions[currentQuestionIndex];
+            const correctButton = document.querySelectorAll("#options button")[currentQuestion.answer];
 
-            if (isCorrect) {
-                resultDiv.textContent = "Correct !";
+            if (selectedIndex === currentQuestion.answer) {
+                button.classList.add("correct");
                 score++;
             } else {
-                resultDiv.textContent = `Incorrect. La bonne réponse était : ${questionData.reponse}`;
+                button.classList.add("incorrect");
+                correctButton.classList.add("correct");
             }
 
-            document.getElementById('nextButton').style.display = 'block';
-            document.querySelectorAll('#options button').forEach(button => button.disabled = true);
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < currentQuestions.length) {
+                    showQuestion();
+                } else {
+                    alert("Quiz terminé ! Votre score est : " + score);
+                    resetGame();
+                }
+            }, 3000);
         }
 
-        function nextQuestion() {
-            currentQuestion++;
-            showQuestion();
+        function resetGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById("game").style.display = "none";
+            document.getElementById("menu").style.display = "block";
         }
 
-        function showFinalScore() {
-            const quizDiv = document.getElementById('quiz');
-            quizDiv.innerHTML = `<h2>Jeu terminé !</h2>
-                                 <p>Votre score final : ${score}/${currentQuestions.length}</p>
-                                 <button onclick="returnToMenu()">Retour au menu</button>`;
-            updateLeaderboard();
-        }
+        document.getElementById("all").onclick = () => startQuiz("test");
+        document.getElementById("histoire").onclick = () => startQuiz("histoire");
+        document.getElementById("geographie").onclick = () => startQuiz("geographie");
+        document.getElementById("maths").onclick = () => startQuiz("maths");
+        document.getElementById("francais").onclick = () => startQuiz("francais");
+        document.getElementById("sciences").onclick = () => startQuiz("sciences");
+        document.getElementById("test").onclick = () => startQuiz("test");
 
-        function updateLeaderboard() {
-            leaderboard.push({name: playerName, score: score});
-            leaderboard.sort((a, b) => b.score - a.score);
-            leaderboard = leaderboard.slice(0, 5);  // Garder seulement le top 5
-
-            const leaderboardDiv = document.getElementById('leaderboard');
-            leaderboardDiv.innerHTML = '<h3>Classement</h3><ol>';
-            leaderboard.forEach(player => {
-                leaderboardDiv.innerHTML += `<li>${player.name}: ${player.score}</li>`;
-            });
-            leaderboardDiv.innerHTML += '</ol>';
-        }
-
-        function returnToMenu() {
-            document.getElementById('menu').style.display = 'block';
-            document.getElementById('quiz').style.display = 'none';
-            document.getElementById('score').textContent = '';
-        }
-
-        document.getElementById('nextButton').addEventListener('click', nextQuestion);
+        document.getElementById("back-to-menu").onclick = resetGame;
     </script>
+
 </body>
 </html>
