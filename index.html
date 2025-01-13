@@ -109,8 +109,20 @@
         ];
 
         const subjects = {
-            histoire: [{ question: "En quelle année a eu lieu la Révolution française ?", options: ["1789", "1792", "1776", "1804"], answer: 0 }],
-            geographie: [{ question: "Quelle est la capitale du Canada ?", options: ["Ottawa", "Toronto", "Vancouver", "Montreal"], answer: 0 }],
+            histoire: [{ question: "Quelles sont les dates de la 1ère Guerre mondiale ?", options: ["1914-1918", "1939-1945", "1940-1944", "1914-1920"], answer: 0 },
+		       { question: "En quelle année a été signé l'Armistice ?", options: ["11 novembre 1918", "11 novembre 1920", "Juin 1940", "Juillet 1940"], answer: 0 },
+		       { question: "Quelles sont les dates de la Seconde Guerre mondiale ?", options: ["1914-1918", "1939-1945", "1940-1944", "1914-1920"], answer: 1 },
+		       { question: "Quand a eu lieu l'appel du général de Gaulle ?", options: ["Juin 1940", "Juillet 1940", "Juin 1944", "Juillet 1944"], answer: 0 },
+		       { question: "Date du Régime de Vichy :", options: ["1940-1944", "1914-1918", "1939-1945", "1914-1920"], answer: 0 },
+		       { question: "Première Guerre mondiale :France / Royaume-Uni / Russie", options: ["Triple alliance", "Triple accord", "Triple entente", "Triple collaboration"], answer: 2 },
+		       { question: "Première Guerre mondiale :Allemagne / Autriche-Hongrie / Italie", options: ["Triple alliance", "Triple accord", "Triple entente", "Triple collaboration"], answer: 0 },
+		      ],
+            geographie: [{ question: "Comment s'appelle la ville autour de laquelle s'est développée une aire urbaine ?", options: ["Banlieue", "Périurbain", "Espace rural", "Ville centre"], answer: 3 },
+			{ question: "Comment s'appelle l'espace urbanisé situé autour de la ville centre ?", options: ["Banlieue", "Périurbain", "Espace rural", "Ville centre"], answer: 0 },
+			 { question: "Comment s'appelle l'espace où l’aire urbaine s’agrandit et qui empiète sur les campagnes alentours ?", options: ["Banlieue", "Périurbain", "Espace rural", "Ville centre"], answer: 1 },
+			{ question: "Comment s'appelle un ensemble de communes formées par des espaces urbains et des communes plus rurales dont 40% de la population travaille dans la ville centre. ?", options: ["Métropole", "Migration pendulaire", "Espace rural", "Aire urbaine"], answer: 3 },
+			{ question: "Une grande ville est appelée :", options: ["Aire urbaine", "Migration pendulaire", "Métropole", "Périurbanisation"], answer:  },
+			],
             maths: [{ question: "Quelle est la formule pour calculer l'aire d'un rectangle ?", options: ["L x l", "c x c", "Lx2 + lx2", "C x 4"], answer: 0 },
 		   { question: "Quelle est la formule pour calculer le périmètre d'un rectangle ?", options: ["L x l", "c x c", "Lx2 + lx2", "C x 4"], answer: 2 },
 		   { question: "Quelle est la formule pour calculer l'aire d'un carré ?", options: ["L x l", "c x c", "Lx2 + lx2", "C x 4"], answer: 1 },
